@@ -2,10 +2,6 @@ import { reckonClient } from '../infrastructure';
 import { DivisorInfoDetail } from '../dto/ReckonApiDto';
 
 class Test1Service {
-  /**
-   * It always assumes that it's going returned right values.
-   * @return {*}  {Promise<string>}
-   */
   public async getDivisibleString(): Promise<string> {
     const [
       rangeInfoResponse,
@@ -14,7 +10,6 @@ class Test1Service {
       reckonClient.getRangeInfoWithRetry(),
       reckonClient.getDivisorInfoWithRetry()
     ]);
-
     const { lower, upper } = rangeInfoResponse;
     const { outputDetails } = divisorInfoResponse;
 

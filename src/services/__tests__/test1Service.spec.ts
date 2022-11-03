@@ -6,9 +6,9 @@ describe('Test 1 Service', () => {
   let getDivisorInfoWithRetrySpy;
 
   beforeEach(() => {
-    getRangeInfoWithRetrySpy = jest.spyOn(reckonClient, "getRangeInfoWithRetry")
+    getRangeInfoWithRetrySpy = jest.spyOn(reckonClient, 'getRangeInfoWithRetry')
       .mockResolvedValue(null);
-    getDivisorInfoWithRetrySpy = jest.spyOn(reckonClient, "getDivisorInfoWithRetry")
+    getDivisorInfoWithRetrySpy = jest.spyOn(reckonClient, 'getDivisorInfoWithRetry')
       .mockResolvedValue(null);
   });
 
@@ -23,14 +23,14 @@ describe('Test 1 Service', () => {
       upper: 6
     });
     getDivisorInfoWithRetrySpy.mockResolvedValue({
-      "outputDetails": [
+      'outputDetails': [
         {
-          "divisor": 2,
-          "output": "Unit"
+          'divisor': 2,
+          'output': 'Unit'
         },
         {
-          "divisor": 3,
-          "output": "Test"
+          'divisor': 3,
+          'output': 'Test'
         }
       ]
     });
@@ -47,5 +47,17 @@ describe('Test 1 Service', () => {
     expect(outcome).toMatch(/4: Unit/);
     expect(outcome).not.toMatch(/5: /);
     expect(outcome).toMatch(/6: UnitTest/);
+  });
+
+  it('should return an empty outcome when provided empty range and divisor objects', async () => {
+    // GIVEN
+    getRangeInfoWithRetrySpy.mockResolvedValue({});
+    getDivisorInfoWithRetrySpy.mockResolvedValue({});
+
+    // WHEN
+    const outcome = await test1Service.getDivisibleString();
+
+    // THEN
+    expect(outcome).toEqual('');
   });
 });

@@ -18,7 +18,7 @@ describe('Test 2 Service', () => {
     jest.resetAllMocks();
   });
 
-  it('should submit the Test 2 result with the right payload ', async () => {
+  it('should submit the Test 2 result with the right payload', async () => {
     // GIVEN
     getTextToSearchWithRetrySpy.mockResolvedValue({
       text: 'An example test.'
@@ -46,5 +46,20 @@ describe('Test 2 Service', () => {
     expect(results[0]).toEqual({ subtext: 'Test', result: '12' });
     expect(results[1]).toEqual({ subtext: 'test', result: '12' });
     expect(results[2]).toEqual({ subtext: 'X', result: '<No Output>' });
+  });
+
+  it('should throw an exception when provided empty text and subtexts objects', async () => {
+    // GIVEN
+    getTextToSearchWithRetrySpy.mockResolvedValue({});
+    getSubTextsToSearchWithRetrySpy.mockResolvedValue({});
+
+    // WHEN
+    try {
+      await test2Service.submitTest2Result();
+    } catch (err) {
+    // THEN
+      expect(err instanceof Error).toBe(true);
+      expect(err.message).toMatch(/Invalid API response data/);
+    }
   });
 });

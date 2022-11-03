@@ -43,6 +43,10 @@ class Test2Service {
     const { text } = textResponse;
     const { subTexts } = subTextsResponse;
 
+    if (!text || (!subTexts || !subTexts.length)) {
+      throw new Error('Invalid API response data');
+    }
+
     subTexts.forEach(subtext => {
       const occurrences = this.findOccurrences(text, subtext);
 
