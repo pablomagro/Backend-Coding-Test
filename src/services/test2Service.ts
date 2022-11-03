@@ -1,4 +1,5 @@
 import { reckonClient } from '../infrastructure';
+import { BadRequestError } from '../infrastructure/errors';
 import { ExpectedResult, ExpectedOutputDto } from '../dto/ReckonApiDto';
 
 class Test2Service {
@@ -44,7 +45,7 @@ class Test2Service {
     const { subTexts } = subTextsResponse;
 
     if (!text || (!subTexts || !subTexts.length)) {
-      throw new Error('Invalid API response data');
+      throw new BadRequestError('Invalid API response data provided');
     }
 
     subTexts.forEach(subtext => {

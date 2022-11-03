@@ -1,5 +1,6 @@
 import test2Service from '../test2Service';
 import { reckonClient } from '../../infrastructure';
+import { BadRequestError } from '../../infrastructure/errors';
 
 describe('Test 2 Service', () => {
   let getTextToSearchWithRetrySpy;
@@ -58,8 +59,8 @@ describe('Test 2 Service', () => {
       await test2Service.submitTest2Result();
     } catch (err) {
     // THEN
-      expect(err instanceof Error).toBe(true);
-      expect(err.message).toMatch(/Invalid API response data/);
+      expect(err instanceof BadRequestError).toBe(true);
+      expect(err.message).toMatch(/Invalid API response data provided/);
     }
   });
 });
