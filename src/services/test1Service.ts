@@ -1,4 +1,5 @@
 import { reckonClient } from '../infrastructure';
+import { BadRequestError } from '../infrastructure/errors';
 import { DivisorInfoDetail } from '../dto/ReckonApiDto';
 
 class Test1Service {
@@ -12,6 +13,10 @@ class Test1Service {
     ]);
     const { lower, upper } = rangeInfoResponse;
     const { outputDetails } = divisorInfoResponse;
+
+    if (!lower || !upper || (!outputDetails || !outputDetails.length)) {
+      throw new BadRequestError('Invalid API response data provided');
+    }
 
     let outputString = '';
     let currentDivisor;

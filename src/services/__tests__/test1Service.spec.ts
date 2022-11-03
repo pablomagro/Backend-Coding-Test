@@ -1,5 +1,6 @@
 import test1Service from '../test1Service';
 import { reckonClient } from '../../infrastructure';
+import { BadRequestError } from '../../infrastructure/errors';
 
 describe('Test 1 Service', () => {
   let getRangeInfoWithRetrySpy;
@@ -55,9 +56,12 @@ describe('Test 1 Service', () => {
     getDivisorInfoWithRetrySpy.mockResolvedValue({});
 
     // WHEN
-    const outcome = await test1Service.getDivisibleString();
-
+    try {
+      await test1Service.getDivisibleString();
+    } catch (err) {
     // THEN
-    expect(outcome).toEqual('');
+      expect(err instanceof BadRequestError).toBe(true);
+      expect(err.message).toMatch(/Invalid API response data provided/);
+    }
   });
 });
