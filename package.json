@@ -12,6 +12,7 @@
     "start:watch": "ts-node ./node_modules/nodemon/bin/nodemon.js --watch src -e js,ts --exec \"npm run build && npm start\"",
     "start": "node build/server.js",
     "test": "jest --runInBand --detectOpenHandles",
+    "test:coverage": "npm test -- --coverage",
     "test:watch": "npm test -- --watchAll"
   },
   "dependencies": {
